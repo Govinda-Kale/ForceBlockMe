@@ -9,39 +9,38 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
+            <img src="../icons/icon128.png" alt="ForceBlockMe Logo" class="logo">
             <h2>ForceBlockMe</h2>
             <p>Focus. Block. Achieve.</p>
         </header>
 
         <!-- Timer Section -->
         <div class="section">
-            <button class="collapsible">Select Timer ⏱️</button>
-            <div class="content">
-                <div class="timer-controls">
-                    <label for="presetTimers">Presets:</label>
-                    <select id="presetTimers">
-                        <option value="25">25 min</option>
-                        <option value="50">50 min</option>
-                        <option value="90">90 min</option>
-                        <option value="120">120 min</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <div id="customTimer" class="hidden">
-                        <input type="number" id="customTimeInput" min="5" max="120" placeholder="Minutes">
-                        <button id="setCustomTime">Set</button>
-                    </div>
-                    <div class="timer-display" id="timerDisplay">00:00</div>
-                    <button id="startTimer">Start</button>
-                    <button id="pauseTimer">Pause</button>
-                    <button id="resetTimer">Reset</button>
+            <h3>Timer ⏱️</h3>
+            <div class="timer-controls">
+                <label for="presetTimers">Presets:</label>
+                <select id="presetTimers">
+                    <option value="25">25 min</option>
+                    <option value="50">50 min</option>
+                    <option value="90">90 min</option>
+                    <option value="120">120 min</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <div id="customTimer" class="hidden">
+                    <input type="number" id="customTimeInput" min="5" max="120" placeholder="Minutes">
+                    <button id="setCustomTime">Set</button>
                 </div>
+                <div class="timer-display" id="timerDisplay">00:00</div>
+                <button id="startTimer">Start</button>
+                <button id="pauseTimer">Pause</button>
+                <button id="resetTimer">Reset</button>
             </div>
         </div>
 
         <!-- Focus Mode Section -->
         <div class="section">
-            <button class="collapsible">Select Focus Mode 🎯</button>
-            <div class="content">
+            <h3>Focus Mode 🎯</h3>
+            <div class="focus-modes">
                 <label><input type="radio" name="mode" value="study"> Study Mode</label>
                 <label><input type="radio" name="mode" value="deepwork"> Deep Work</label>
                 <label><input type="radio" name="mode" value="writing"> Writing Sprint</label>
@@ -51,8 +50,8 @@
 
         <!-- Category Blocking -->
         <div class="section">
-            <button class="collapsible">Block Categories 🚫</button>
-            <div class="content">
+            <h3>Block Categories 🚫</h3>
+            <div class="category-blocking">
                 <label><input type="checkbox" name="blockCategory" value="social"> Social Media</label>
                 <label><input type="checkbox" name="blockCategory" value="entertainment"> Entertainment</label>
                 <label><input type="checkbox" name="blockCategory" value="news"> News</label>
@@ -61,10 +60,20 @@
             </div>
         </div>
 
+        <!-- Custom Blocked Sites -->
+        <div class="section">
+            <h3>Custom Blocked Sites 🚷</h3>
+            <div class="custom-blocking">
+                <input type="text" id="customSiteInput" placeholder="Enter site URL">
+                <button id="addCustomSite">Add</button>
+                <ul id="customSiteList"></ul>
+            </div>
+        </div>
+
         <!-- Stats Section -->
         <div class="section">
-            <button class="collapsible">Focus Stats 📊</button>
-            <div class="content">
+            <h3>Focus Stats 📊</h3>
+            <div class="stats">
                 <p>Today: <span id="focusHours">0h 0m</span></p>
                 <p>Blocked Attempts: <span id="blockedAttempts">0</span></p>
             </div>
