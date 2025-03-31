@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Site Blocked - ForceBlockMe</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #2c3e50;
+      color: #ecf0f1;
+    }
+
+    .container {
+      text-align: center;
+      background: #34495e;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 5px 0;
+    }
+
+    .reason {
+      font-weight: bold;
+      color: #e74c3c;
+    }
+
+    .focus-info {
+      margin-top: 15px;
+      font-size: 0.9em;
+      color: #95a5a6;
+    }
+
+    .unlock {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #e74c3c;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .unlock:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Access Denied</h1>
+    <p>This website is currently blocked.</p>
+    <p class="reason" id="block-reason">Reason: Focus Mode is active.</p>
+    <p class="focus-info" id="time-remaining">Time remaining: --:--</p>
+    <button class="unlock" onclick="attemptUnlock()">Unlock</button>
+  </div>
+
+  <script>
+    // Display the remaining time if focus mode is active
+    function updateTime() {
+      chrome.storage.sync.get(["focusEndTime"], (data) => {
+        if (data.focusEndTime) {
+          const timeLeft = Math.max(0, data.focusEndTime - Date.now());
+          const minutes = Math.floor(timeLeft / 60000);
+          const seconds = Math.floor((timeLeft % 60000) / 1000);
+          document.getElementById("time-remaining").textContent = 
+            `Time remaining: ${minutes}:${seconds.toString().padStart(2, "0")}`;
+        }
+      });
+    }
+
+    // Update the timer every second
+    setInterval(updateTime, 1000);
+
+    // Unlock attempt
+    function attemptUnlock() {
+      chrome.runtime.sendMessage({ action: "attemptUnlock" }, (response) => {
+        if (response.success) {
+          alert("Focus mode paused. You can now access the site.");
+          window.location.reload();
+        } else {
+          alert("Unlock limit reached or focus mode is still active.");
+        }
+      });
+    }
+  </script>
+</body>
+</html>
