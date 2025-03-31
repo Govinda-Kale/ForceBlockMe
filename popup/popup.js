@@ -1,93 +1,92 @@
-// popup.js
+document.addEventListener('DOMContentLoaded', () => {
+    const timerDisplay = document.getElementById('timerDisplay');
+    const startButton = document.getElementById('startTimer');
+    const pauseButton = document.getElementById('pauseTimer');
+    const resetButton = document.getElementById('resetTimer');
+    const presetTimers = document.getElementById('presetTimers');
+    const customTimeInput = document.getElementById('customTimeInput');
+    const setCustomTimeButton = document.getElementById('setCustomTime');
+    const customTimer = document.getElementById('customTimer');
+    const addCustomSiteButton = document.getElementById('addCustomSite');
+    const customSiteInput = document.getElementById('customSiteInput');
+    const customSiteList = document.getElementById('customSiteList');
 
-// Timer and Session Variables
-let timerInterval;
-let focusTime = 25 * 60;
-let remainingTime = focusTime;
-let isActive = false;
-let isPaused = false;
-let sessionType = 'study';
-let blockedSites = [];
-let blockCategories = {};
+    let timerInterval;
+    let focusTime = 25 * 60;
+    let remainingTime = focusTime;
+    let isActive = false;
+    let isPaused = false;
 
-// DOM Elements
-const timerDisplay = document.getElementById('timer');
-const startButton = document.getElementById('start');
-const pauseButton = document.getElementById('pause');
-const resetButton = document.getElementById('reset');
-const categorySelectors = document.querySelectorAll('.category-toggle');
-const focusModeButtons = document.querySelectorAll('.focus-mode');
-
-// Timer Functions
-function updateTimerDisplay() {
-  const minutes = Math.floor(remainingTime / 60);
-  const seconds = remainingTime % 60;
-  timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-}
-
-function startTimer() {
-  if (isActive) return;
-  isActive = true;
-  isPaused = false;
-  timerInterval = setInterval(() => {
-    if (remainingTime <= 0) {
-      completeSession();
-      return;
+    function updateTimerDisplay() {
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = remainingTime % 60;
+        timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     }
-    remainingTime--;
+
+    function startTimer() {
+        if (isActive) return;
+        isActive = true;
+        isPaused = false;
+        timerInterval = setInterval(() => {
+            if (remainingTime <= 0) {
+                completeSession();
+                return;
+            }
+            remainingTime--;
+            updateTimerDisplay();
+        }, 1000);
+    }
+
+    function pauseTimer() {
+        isPaused = true;
+        clearInterval(timerInterval);
+    }
+
+    function resetTimer() {
+        clearInterval(timerInterval);
+        isActive = false;
+        remainingTime = focusTime;
+        updateTimerDisplay();
+    }
+
+    function completeSession() {
+        alert('Session Complete!');
+        resetTimer();
+    }
+
+    startButton.addEventListener('click', startTimer);
+    pauseButton.addEventListener('click', pauseTimer);
+    resetButton.addEventListener('click', resetTimer);
+
+    presetTimers.addEventListener('change', (e) => {
+        if (e.target.value === 'custom') {
+            customTimer.classList.remove('hidden');
+        } else {
+            customTimer.classList.add('hidden');
+            focusTime = parseInt(e.target.value) * 60;
+            resetTimer();
+        }
+    });
+
+    setCustomTimeButton.addEventListener('click', () => {
+        const customTime = parseInt(customTimeInput.value);
+        if (customTime >= 5 && customTime <= 120) {
+            focusTime = customTime * 60;
+            resetTimer();
+        } else {
+            alert('Please enter a valid time between 5 and 120 minutes.');
+        }
+    });
+
+    addCustomSiteButton.addEventListener('click', () => {
+        const siteUrl = customSiteInput.value.trim();
+        if (siteUrl) {
+            const listItem = document.createElement('li');
+            listItem.textContent = siteUrl;
+            customSiteList.appendChild(listItem);
+            customSiteInput.value = '';
+        }
+    });
+
     updateTimerDisplay();
-  }, 1000);
-}
-
-function pauseTimer() {
-  isPaused = true;
-  clearInterval(timerInterval);
-}
-
-function resetTimer() {
-  clearInterval(timerInterval);
-  isActive = false;
-  remainingTime = focusTime;
-  updateTimerDisplay();
-}
-
-function completeSession() {
-  alert('Session Complete!');
-  resetTimer();
-}
-
-// Category Blocking
-function toggleCategory(category) {
-  blockCategories[category] = !blockCategories[category];
-  updateBlockList();
-}
-
-function updateBlockList() {
-  blockedSites = [];
-  for (let category in blockCategories) {
-    if (blockCategories[category]) {
-      blockedSites = [...blockedSites, ...getSitesByCategory(category)];
-    }
-  }
-  saveBlockList();
-}
-
-// User Interactions
-startButton.addEventListener('click', startTimer);
-pauseButton.addEventListener('click', pauseTimer);
-resetButton.addEventListener('click', resetTimer);
-
-categorySelectors.forEach((btn) => {
-  btn.addEventListener('click', () => toggleCategory(btn.dataset.category));
 });
-
-focusModeButtons.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    sessionType = btn.dataset.type;
-    focusTime = getPresetTime(sessionType);
-    resetTimer();
-  });
-});
-
-// Initialization
-updateTimerDisplay();
