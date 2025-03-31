@@ -1,97 +1,109 @@
-// popup.css
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  padding: 10px;
-  margin: 0;
-  text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin: 0;
+    text-align: center;
 }
 
-h1 {
-  margin: 0;
-  padding: 10px;
-  font-size: 1.5em;
-  color: #333;
+.container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 400px;
+    margin: auto;
 }
 
-.timer {
-  position: relative;
-  width: 150px;
-  height: 150px;
-  margin: 20px auto;
-  border-radius: 50%;
-  background: conic-gradient(#76c7c0 0%, #dcdcdc 0%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2em;
-  color: #333;
+.header {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.active {
-  animation: pulse 1s infinite;
-  color: #28a745;
+.logo {
+    width: 64px;
+    height: 64px;
 }
 
-@keyframes pulse {
-  0% { box-shadow: 0 0 5px #28a745; }
-  50% { box-shadow: 0 0 20px #28a745; }
-  100% { box-shadow: 0 0 5px #28a745; }
+h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
 }
 
-.preset-buttons button {
-  margin: 5px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+p {
+    margin: 5px 0;
+    color: #777;
 }
 
-.preset-buttons button:hover {
-  background-color: #0056b3;
+.section {
+    margin-bottom: 20px;
 }
 
-.status-indicator {
-  margin: 10px;
-  padding: 5px;
-  border-radius: 5px;
-  font-weight: bold;
+h3 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
 }
 
-.status-active {
-  background-color: #28a745;
-  color: white;
+.timer-controls,
+.focus-modes,
+.category-blocking,
+.custom-blocking,
+.stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.status-inactive {
-  background-color: #dc3545;
-  color: white;
+.timer-display {
+    font-size: 2em;
+    margin: 10px 0;
+    padding: 10px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    width: 100px;
+    text-align: center;
 }
 
-.block-list {
-  margin-top: 20px;
+button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.block-list input {
-  margin: 5px;
-  padding: 5px;
-  width: 80%;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+button:hover {
+    background-color: #0056b3;
 }
 
-.block-list button {
-  margin: 5px;
-  padding: 5px 10px;
-  background-color: #17a2b8;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
+input[type="number"],
+input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 5px 0;
 }
 
-.block-list button:hover {
-  background-color: #138496;
+#customSiteList {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+#customSiteList li {
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 3px;
+    margin: 5px 0;
+}
+
+footer {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
 }
